@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -25,6 +25,7 @@ export default mergeIds(chunterId, chunter, {
   component: {
     CreateChannel: '' as AnyComponent,
     CreateDirectChat: '' as AnyComponent,
+    CreateChannelGroup: '' as AnyComponent,
     ChannelHeader: '' as AnyComponent,
     ChannelPanel: '' as AnyComponent,
     ThreadViewPanel: '' as AnyComponent,
@@ -108,6 +109,9 @@ export default mergeIds(chunterId, chunter, {
     ArchiveActivityConfirmationMessage: '' as IntlString,
     JoinChannelHeader: '' as IntlString,
     JoinChannelText: '' as IntlString,
-    LatestMessages: '' as IntlString
+    LatestMessages: '' as IntlString,
+    CreateGroup: '' as IntlString,
+    GroupName: '' as IntlString,
+    GroupNamePlaceholder: '' as IntlString
   }
 })

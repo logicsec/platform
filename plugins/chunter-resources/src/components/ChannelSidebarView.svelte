@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -21,11 +21,13 @@
   import { ActivityMessage } from '@hcengineering/activity'
   import { ChatWidgetTab } from '@hcengineering/chunter'
   import { updateTabData } from '@hcengineering/workbench-resources'
+  import { Button } from '@hcengineering/ui'
 
   import Channel from './Channel.svelte'
   import { closeThreadInSidebarChannel } from '../navigation'
   import { ThreadView } from '../index'
   import ChannelHeader from './ChannelHeader.svelte'
+  import CreateChannelGroup from './CreateChannelGroup.svelte'
 
   export let widget: Widget
   export let tab: ChatWidgetTab
@@ -39,6 +41,7 @@
   let object: Doc | undefined = undefined
   let context: DocNotifyContext | undefined = undefined
   let selectedMessageId: Ref<ActivityMessage> | undefined = tab.data.selectedMessageId
+  let showCreateGroup = false
 
   $: context = object ? $contextByDocStore.get(object._id) : undefined
   $: void loadObject(tab.data._id, tab.data._class)
@@ -75,39 +78,99 @@
   $: visible = height !== '0px' && width !== '0px'
 </script>
 
-{#if object && renderChannel && visible}
-  <div class="channel" class:invisible={threadId !== undefined} style:height style:width>
-    <ChannelHeader
-      _id={object._id}
-      _class={object._class}
-      {object}
-      withAside={false}
-      withSearch={false}
-      canOpen={true}
-      allowClose={true}
-      canOpenInSidebar={false}
-      closeOnEscape={false}
-      on:close
+<div class="flex flex-col h-full">
+  {#if showCreateGroup}
+    <CreateChannelGroup 
+      bind:show={showCreateGroup}
+      on:create={(event) => {
+        // TODO: Handle group creation
+        console.log('Create group:', event.detail.name)
+      }}
     />
-    {#key object._id}
-      <Channel {object} {context} syncLocation={false} freeze={threadId !== undefined} {selectedMessageId} />
-    {/key}
-  </div>
-{/if}
-{#if threadId && visible}
-  <div class="thread" style:height style:width>
-    <ThreadView
-      {...tab.data.props}
-      _id={threadId}
-      {selectedMessageId}
-      syncLocation={false}
-      on:channel={() => closeThreadInSidebarChannel(widget, tab)}
-      on:close
+  {/if}
+
+  <div class="flex items-center justify-between px-4 py-2">
+    <span class="text-sm font-medium">Channels</span>
+    <Button
+      icon={chunter.icon.Plus}
+      kind="ghost"
+      size="small"
+      on:click={() => { showCreateGroup = true }}
     />
   </div>
-{/if}
+
+  {#if object && renderChannel && visible}
+    <div class="channel" class:invisible={threadId !== undefined} style:height style:width>
+      <ChannelHeader
+        _id={object._id}
+        _class={object._class}
+        {object}
+        withAside={false}
+        withSearch={false}
+        canOpen={true}
+        allowClose={true}
+        canOpenInSidebar={false}
+        closeOnEscape={false}
+        on:close
+      />
+      {#key object._id}
+        <Channel {object} {context} syncLocation={false} freeze={threadId !== undefined} {selectedMessageId} />
+      {/key}
+    </div>
+  {/if}
+  {#if threadId && visible}
+    <div class="thread" style:height style:width>
+      <ThreadView
+        {...tab.data.props}
+        _id={threadId}
+        {selectedMessageId}
+        syncLocation={false}
+        on:channel={() => closeThreadInSidebarChannel(widget, tab)}
+        on:close
+      />
+    </div>
+  {/if}
+</div>
 
 <style lang="scss">
+  .flex {
+    display: flex;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .h-full {
+    height: 100%;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .text-sm {
+    font-size: 0.875rem;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
   .channel {
     display: inline-flex;
     flex-direction: column;

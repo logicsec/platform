@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -34,6 +34,7 @@ import ChatMessagesPresenter from './components/chat-message/ChatMessagesPresent
 import Chat from './components/chat/Chat.svelte'
 import CreateChannel from './components/chat/create/CreateChannel.svelte'
 import CreateDirectChat from './components/chat/create/CreateDirectChat.svelte'
+import CreateChannelGroup from './components/CreateChannelGroup.svelte'
 import ChunterBrowser from './components/chat/specials/ChunterBrowser.svelte'
 import SavedMessages from './components/chat/specials/SavedMessages.svelte'
 import ConvertDmToPrivateChannelModal from './components/ConvertDmToPrivateChannel.svelte'
@@ -157,6 +158,7 @@ export default async (): Promise<Resources> => ({
   component: {
     CreateChannel,
     CreateDirectChat,
+    CreateChannelGroup,
     ThreadParentPresenter,
     ThreadViewPanel,
     ChannelHeader,

@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -311,6 +311,13 @@ function getChannelsActions (): Action[] {
           label: chunter.string.CreateChannel,
           action: async (): Promise<void> => {
             showPopup(chunter.component.CreateChannel, {}, 'top')
+          }
+        },
+        {
+          icon: chunter.icon.Hashtag,
+          label: chunter.string.CreateGroup,
+          action: async (): Promise<void> => {
+            showPopup(chunter.component.CreateChannelGroup, {}, 'top')
           }
         }
       ]
